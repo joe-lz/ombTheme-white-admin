@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { Table, Tag, Space } from "antd";
 
 import styles from "./index.module.scss";
-import Layout from "src/components/_user/Layout";
+import Layout from "src/components/admin/Layout";
 
 function AdminHome() {
   return (

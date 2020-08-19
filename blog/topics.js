@@ -5,8 +5,8 @@ import { Table, Tag, Space, Modal, Form, Input, Button, Checkbox, notification }
 import React, { useState, useEffect } from 'react'
 
 import styles from './index.module.scss'
-import Layout from 'src/components/_user/Layout'
-import TopicItem from 'src/components/_user/TopicItem'
+import Layout from 'src/components/admin/Layout'
+import TopicItem from 'src/components/admin/TopicItem'
 import { createTopics, getTopicList, updateTopic } from 'src/service/topics'
 
 function AdminHome() {

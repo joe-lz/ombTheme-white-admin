@@ -6,8 +6,8 @@ import { QuestionCircleOutlined } from '@ant-design/icons'
 import React, { useState, useEffect } from 'react'
 
 import styles from './index.module.scss'
-import Layout from 'src/components/_user/Layout'
-import InputItem from 'src/components/_user/InputItem'
+import Layout from 'src/components/admin/Layout'
+import InputItem from 'src/components/admin/InputItem'
 import { createProfile, getProfileList, updateProfile } from 'src/service/profile'
 
 function AdminHome(props) {

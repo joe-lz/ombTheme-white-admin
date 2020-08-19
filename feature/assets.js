@@ -3,8 +3,8 @@ import AV from "leancloud-storage";
 import dynamic from "next/dynamic";
 
 import styles from "./index.module.scss";
-import Layout from "src/components/_user/Layout";
-import Upload from "src/components/_user/Upload";
+import Layout from "src/components/admin/Layout";
+import Upload from "src/components/admin/Upload";
 
 function AdminHome() {
   return (

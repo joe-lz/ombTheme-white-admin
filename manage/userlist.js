@@ -6,7 +6,7 @@ import { QuestionCircleOutlined } from '@ant-design/icons'
 import React, { useState, useEffect } from 'react'
 
 import styles from './index.module.scss'
-import Layout from 'src/components/_user/Layout'
+import Layout from 'src/components/admin/Layout'
 import priorityArr from 'src/lib/priority'
 
 function AdminHome(props) {

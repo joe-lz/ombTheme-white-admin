@@ -5,8 +5,8 @@ import { Table, Tag, Space, Button, notification } from 'antd'
 import React, { useState, useEffect } from 'react'
 
 import styles from './index.module.scss'
-import Layout from 'src/components/_user/Layout'
-import InputItem from 'src/components/_user/InputItem'
+import Layout from 'src/components/admin/Layout'
+import InputItem from 'src/components/admin/InputItem'
 import { getMyUserInfo, updateUserInfo } from 'src/service/user'
 
 function AdminHome() {

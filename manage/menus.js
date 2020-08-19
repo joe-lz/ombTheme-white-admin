@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react'
 import shortid from 'shortid'
 
 import styles from './index.module.scss'
-import Layout from 'src/components/_user/Layout'
+import Layout from 'src/components/admin/Layout'
 import defaultMenu, { handleformatData } from 'src/lib/defaultMenu'
 import { createMenus, updateMenus, getMenusList } from 'src/service/menu'
 

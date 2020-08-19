@@ -16,7 +16,7 @@ if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {
 }
 
 import styles from './index.module.scss'
-import Layout from 'src/components/_user/Layout'
+import Layout from 'src/components/admin/Layout'
 import { getMenusList } from 'src/service/menu'
 import { getArticleById, updateArticle } from 'src/service/article'
 

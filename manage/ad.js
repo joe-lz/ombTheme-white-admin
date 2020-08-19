@@ -6,8 +6,8 @@ import { QuestionCircleOutlined } from '@ant-design/icons'
 import React, { useState, useEffect } from 'react'
 
 import styles from './index.module.scss'
-import Layout from 'src/components/_user/Layout'
-import AdForm from 'src/components/_user/AdForm'
+import Layout from 'src/components/admin/Layout'
+import AdForm from 'src/components/admin/AdForm'
 import { createProfile, getProfileList, updateProfile } from 'src/service/profile'
 import defaultAd from 'src/lib/defaultAd'
 
