@@ -138,7 +138,7 @@ function AdminHome(props) {
           <div className="_admin_body_section_block" style={{ padding: 30 }}>
             <InputItem
               type="switch"
-              title={`开放${process.env.blogname}`}
+              title={`开放动态模块`}
               value={showBlog}
               onChange={(e) => {
                 setshowBlog(e)
@@ -146,14 +146,14 @@ function AdminHome(props) {
             />
             <InputItem
               type="switch"
-              title={`允许评论${process.env.blogname}`}
+              title={`允许评论动态模块`}
               value={allowBComment}
               onChange={(e) => {
                 setallowBComment(e)
               }}
             />
             <InputItem
-              title={`${process.env.blogname}名称`}
+              title={`动态模块名称`}
               placeholder="请输入"
               value={blogName}
               onChange={(e) => {
