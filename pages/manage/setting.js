@@ -1,52 +1,68 @@
-import Head from 'next/head'
-import AV from 'leancloud-storage'
-import dynamic from 'next/dynamic'
-import { Table, Tag, Space, Switch, notification, Radio, Popover, Modal, Button } from 'antd'
-import { QuestionCircleOutlined } from '@ant-design/icons'
-import React, { useState, useEffect } from 'react'
+import Head from "next/head";
+import AV from "leancloud-storage";
+import dynamic from "next/dynamic";
+import {
+  Table,
+  Tag,
+  Space,
+  Switch,
+  notification,
+  Radio,
+  Popover,
+  Modal,
+  Button,
+} from "antd";
+import { QuestionCircleOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from "react";
 
-import styles from './index.module.scss'
-import Layout from 'src/components/admin/Layout'
-import InputItem from 'src/components/admin/InputItem'
-import { createProfile, getProfileList, updateProfile } from 'src/service/profile'
+import styles from "./index.module.scss";
+import Layout from "src/components/admin/Layout";
+import InputItem from "src/components/admin/InputItem";
+import {
+  createProfile,
+  getProfileList,
+  updateProfile,
+} from "src/service/profile";
 
 function AdminHome(props) {
-  const [curUserInfo, setcurUserInfo] = useState(null)
-  const [profile, setprofile] = useState(null)
+  const [curUserInfo, setcurUserInfo] = useState(null);
+  const [profile, setprofile] = useState(null);
 
-  const [logo, setlogo] = useState('')
-  const [title, settitle] = useState('')
-  const [github, setgithub] = useState('')
-  const [social_link, setsocial_link] = useState('')
-  const [copyright, setcopyright] = useState('')
-  const [allowAComment, setallowAComment] = useState(false)
+  const [logo, setlogo] = useState("");
+  const [title, settitle] = useState("");
+  const [github, setgithub] = useState("");
+  const [email, setemail] = useState("");
+  const [social_link, setsocial_link] = useState("");
+  const [copyright, setcopyright] = useState("");
+  const [allowAComment, setallowAComment] = useState(false);
   const [allowBComment, setallowBComment] = useState(false);
   const [allowRegister, setallowRegister] = useState(false);
-  const [showBlog, setshowBlog] = useState(false)
-  const [blogName, setblogName] = useState('')
+  const [showBlog, setshowBlog] = useState(false);
+  const [blogName, setblogName] = useState("");
 
   // 获取资料
   const getProfile = () => {
     getProfileList().then((res) => {
       if (res) {
-        setprofile(res)
-        setlogo(res.attributes.logo)
-        settitle(res.attributes.title)
-        setgithub(res.attributes.github)
-        setsocial_link(res.attributes.social_link)
-        setcopyright(res.attributes.copyright)
-        setallowAComment(res.attributes.allowAComment)
+        setprofile(res);
+        setlogo(res.attributes.logo);
+        settitle(res.attributes.title);
+        setgithub(res.attributes.github);
+        setemail(res.attributes.email);
+        setsocial_link(res.attributes.social_link);
+        setcopyright(res.attributes.copyright);
+        setallowAComment(res.attributes.allowAComment);
         setallowBComment(res.attributes.allowBComment);
         setallowRegister(res.attributes.allowRegister);
-        setshowBlog(res.attributes.showBlog)
-        setblogName(res.attributes.blogName)
+        setshowBlog(res.attributes.showBlog);
+        setblogName(res.attributes.blogName);
       } else {
         createProfile().then((resCreate) => {
-          setprofile(resCreate)
-        })
+          setprofile(resCreate);
+        });
       }
-    })
-  }
+    });
+  };
 
   // 更新profile
   const handlesubmit = async () => {
@@ -56,6 +72,7 @@ function AdminHome(props) {
         logo,
         title,
         github,
+        email,
         social_link,
         copyright,
         allowAComment,
@@ -64,17 +81,17 @@ function AdminHome(props) {
         showBlog,
         blogName,
       },
-    })
-    getProfile()
+    });
+    getProfile();
     notification.success({
-      message: '更新成功',
+      message: "更新成功",
       // description: "请输入用户名、密码",
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    getProfile()
-  }, [])
+    getProfile();
+  }, []);
 
   return (
     <Layout
@@ -108,6 +125,14 @@ function AdminHome(props) {
               value={github}
               onChange={(e) => {
                 setgithub(e);
+              }}
+            />
+            <InputItem
+              title="Email"
+              placeholder="请输入email"
+              value={email}
+              onChange={(e) => {
+                setemail(e);
               }}
             />
             <InputItem
@@ -200,4 +225,4 @@ function AdminHome(props) {
   );
 }
 
-export default AdminHome
+export default AdminHome;
