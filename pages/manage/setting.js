@@ -20,7 +20,8 @@ function AdminHome(props) {
   const [social_link, setsocial_link] = useState('')
   const [copyright, setcopyright] = useState('')
   const [allowAComment, setallowAComment] = useState(false)
-  const [allowBComment, setallowBComment] = useState(false)
+  const [allowBComment, setallowBComment] = useState(false);
+  const [allowRegister, setallowRegister] = useState(false);
   const [showBlog, setshowBlog] = useState(false)
   const [blogName, setblogName] = useState('')
 
@@ -35,7 +36,8 @@ function AdminHome(props) {
         setsocial_link(res.attributes.social_link)
         setcopyright(res.attributes.copyright)
         setallowAComment(res.attributes.allowAComment)
-        setallowBComment(res.attributes.allowBComment)
+        setallowBComment(res.attributes.allowBComment);
+        setallowRegister(res.attributes.allowRegister);
         setshowBlog(res.attributes.showBlog)
         setblogName(res.attributes.blogName)
       } else {
@@ -58,6 +60,7 @@ function AdminHome(props) {
         copyright,
         allowAComment,
         allowBComment,
+        allowRegister,
         showBlog,
         blogName,
       },
@@ -76,7 +79,7 @@ function AdminHome(props) {
   return (
     <Layout
       onChange={(params) => {
-        setcurUserInfo(params.userinfo)
+        setcurUserInfo(params.userinfo);
       }}
     >
       <p className="_admin_body_section_title">基本设置</p>
@@ -88,7 +91,7 @@ function AdminHome(props) {
               type="image"
               value={logo}
               onChange={(e) => {
-                setlogo(e)
+                setlogo(e);
               }}
             />
             <InputItem
@@ -96,7 +99,7 @@ function AdminHome(props) {
               placeholder="请输入标题"
               value={title}
               onChange={(e) => {
-                settitle(e)
+                settitle(e);
               }}
             />
             <InputItem
@@ -104,7 +107,7 @@ function AdminHome(props) {
               placeholder="请输入url"
               value={github}
               onChange={(e) => {
-                setgithub(e)
+                setgithub(e);
               }}
             />
             <InputItem
@@ -112,7 +115,7 @@ function AdminHome(props) {
               placeholder="请输入url"
               value={social_link}
               onChange={(e) => {
-                setsocial_link(e)
+                setsocial_link(e);
               }}
             />
             <InputItem
@@ -120,18 +123,27 @@ function AdminHome(props) {
               placeholder="请输入copyright"
               value={copyright}
               onChange={(e) => {
-                setcopyright(e)
+                setcopyright(e);
               }}
             />
           </div>
-
+          <div className="_admin_body_section_block" style={{ padding: 30 }}>
+            <InputItem
+              type="switch"
+              title="允许新用户注册"
+              value={allowRegister}
+              onChange={(e) => {
+                setallowRegister(e);
+              }}
+            />
+          </div>
           <div className="_admin_body_section_block" style={{ padding: 30 }}>
             <InputItem
               type="switch"
               title="允许评论文章"
               value={allowAComment}
               onChange={(e) => {
-                setallowAComment(e)
+                setallowAComment(e);
               }}
             />
           </div>
@@ -141,7 +153,7 @@ function AdminHome(props) {
               title={`开放动态模块`}
               value={showBlog}
               onChange={(e) => {
-                setshowBlog(e)
+                setshowBlog(e);
               }}
             />
             <InputItem
@@ -149,7 +161,7 @@ function AdminHome(props) {
               title={`允许评论动态模块`}
               value={allowBComment}
               onChange={(e) => {
-                setallowBComment(e)
+                setallowBComment(e);
               }}
             />
             <InputItem
@@ -157,7 +169,7 @@ function AdminHome(props) {
               placeholder="请输入"
               value={blogName}
               onChange={(e) => {
-                setblogName(e)
+                setblogName(e);
               }}
             />
           </div>
@@ -165,7 +177,7 @@ function AdminHome(props) {
             type="primary"
             size="large"
             onClick={() => {
-              handlesubmit()
+              handlesubmit();
             }}
           >
             保存
@@ -174,13 +186,18 @@ function AdminHome(props) {
       ) : (
         <div
           className="_admin_body_section_block"
-          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 100 }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: 100,
+          }}
         >
           暂无权限，请联系管理员开通～
         </div>
       )}
     </Layout>
-  )
+  );
 }
 
 export default AdminHome
