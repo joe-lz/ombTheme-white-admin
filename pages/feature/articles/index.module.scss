@@ -37,10 +37,14 @@ $max-width: 2000px;
     min-height: 100vh;
   }
   &_operation {
-    &_btn {
+    &_catagory {
       margin-right: 15px;
       display: inline-block;
       width: 200px;
+    }
+    &_assets {
+      margin-right: 30px;
+      display: inline-block;
     }
     button {
       margin-right: 10px;

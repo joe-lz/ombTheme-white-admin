@@ -1,33 +1,35 @@
-import Head from 'next/head'
-import AV from 'leancloud-storage'
-import dynamic from 'next/dynamic'
-import React, { useState, useEffect } from 'react'
-import { Tree, Button, notification, Input, Modal, TreeSelect } from 'antd'
-import { useRouter } from 'next/router'
-import marked from 'marked'
-import hljs from 'highlight.js'
+import Head from "next/head";
+import AV from "leancloud-storage";
+import dynamic from "next/dynamic";
+import React, { useState, useEffect } from "react";
+import { Tree, Button, notification, Input, Modal, TreeSelect } from "antd";
+import { PictureOutlined } from "@ant-design/icons";
+import { useRouter } from "next/router";
+import marked from "marked";
+import hljs from "highlight.js";
 
-let CodeMirror = null
-if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {
-  const { UnControlled } = require('react-codemirror2')
-  CodeMirror = UnControlled
-  require('codemirror/mode/javascript/javascript')
+let CodeMirror = null;
+if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
+  const { UnControlled } = require("react-codemirror2");
+  CodeMirror = UnControlled;
+  require("codemirror/mode/javascript/javascript");
   // require('codemirror/mode/markdown/markdown')
 }
 
-import styles from './index.module.scss'
-import Layout from 'src/components/admin/Layout'
-import { getMenusList } from 'src/service/menu'
-import { getArticleById, updateArticle } from 'src/service/article'
+import styles from "./index.module.scss";
+import Layout from "src/components/admin/Layout";
+import Upload from "src/components/admin/Upload";
+import { getMenusList } from "src/service/menu";
+import { getArticleById, updateArticle } from "src/service/article";
 
-const { TextArea } = Input
-const renderer = new marked.Renderer()
+const { TextArea } = Input;
+const renderer = new marked.Renderer();
 marked.setOptions({
   renderer,
   highlight: function (code, language) {
-    const hljs = require('highlight.js')
-    const validLanguage = hljs.getLanguage(language) ? language : 'plaintext'
-    return hljs.highlight(validLanguage, code).value
+    const hljs = require("highlight.js");
+    const validLanguage = hljs.getLanguage(language) ? language : "plaintext";
+    return hljs.highlight(validLanguage, code).value;
   },
   pedantic: false,
   gfm: true,
@@ -36,19 +38,20 @@ marked.setOptions({
   smartLists: true,
   smartypants: false,
   xhtml: false,
-})
+});
+
 function AdminHome() {
-  const router = useRouter()
-  const { aid } = router.query
+  const router = useRouter();
+  const { aid } = router.query;
+  const [modalShow, setmodalShow] = useState(false);
+  const [articleItem, setarticleItem] = useState(null);
+  const [menus, setmenus] = useState([]);
 
-  const [articleItem, setarticleItem] = useState(null)
-  const [menus, setmenus] = useState([])
-
-  const [category_1_key, setcategory_1_key] = useState(null)
-  const [category_1_title, setcategory_1_title] = useState(null)
-  const [category_2_key, setcategory_2_key] = useState(null)
-  const [category_2_title, setcategory_2_title] = useState(null)
-  const [articleTitle, setarticleTitle] = useState('')
+  const [category_1_key, setcategory_1_key] = useState(null);
+  const [category_1_title, setcategory_1_title] = useState(null);
+  const [category_2_key, setcategory_2_key] = useState(null);
+  const [category_2_title, setcategory_2_title] = useState(null);
+  const [articleTitle, setarticleTitle] = useState("");
   const [articleVal, setarticleVal] = useState(`
 Marked - Markdown Parser
 ========================
@@ -86,46 +89,46 @@ Ready to start writing?  Either start changing stuff on the left or
 
 [Marked]: https://github.com/markedjs/marked/
 [Markdown]: http://daringfireball.net/projects/markdown/
-`)
+`);
 
   const handleGetMenu = async () => {
     // 获取菜单
-    const res = await getMenusList()
-    setmenus(res.toJSON().value)
-  }
+    const res = await getMenusList();
+    setmenus(res.toJSON().value);
+  };
 
   const onCategoryChange = (selectKey) => {
-    let category_1_key = null
-    let category_1_title = null
+    let category_1_key = null;
+    let category_1_title = null;
 
-    let category_2_key = null
-    let category_2_title = null
+    let category_2_key = null;
+    let category_2_title = null;
 
     menus.map((obj1) => {
       if (obj1.key === selectKey) {
-        category_1_key = obj1.key
-        category_1_title = obj1.title
+        category_1_key = obj1.key;
+        category_1_title = obj1.title;
       }
 
       if (obj1.children) {
         obj1.children.map((obj2) => {
           if (obj2.key === selectKey) {
-            category_1_key = obj1.key
-            category_1_title = obj1.title
+            category_1_key = obj1.key;
+            category_1_title = obj1.title;
 
-            category_2_key = obj2.key
-            category_2_title = obj2.title
+            category_2_key = obj2.key;
+            category_2_title = obj2.title;
           }
-          return obj2
-        })
+          return obj2;
+        });
       }
-      return obj1
-    })
-    setcategory_1_key(category_1_key)
-    setcategory_1_title(category_1_title)
-    setcategory_2_key(category_2_key)
-    setcategory_2_title(category_2_title)
-  }
+      return obj1;
+    });
+    setcategory_1_key(category_1_key);
+    setcategory_1_title(category_1_title);
+    setcategory_2_key(category_2_key);
+    setcategory_2_title(category_2_title);
+  };
 
   const handleUpdate = async (params = {}) => {
     await updateArticle({
@@ -139,42 +142,42 @@ Ready to start writing?  Either start changing stuff on the left or
         category_2_title,
         ...params,
       },
-    })
+    });
     notification.success({
-      message: '保存成功',
+      message: "保存成功",
       // description: "请输入用户名、密码",
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    handleGetMenu()
-  }, [])
+    handleGetMenu();
+  }, []);
 
   useEffect(() => {
     if (router && router.query) {
       if (aid) {
         async function fetchData() {
           // 获取文章
-          const res = await getArticleById({ id: aid })
-          const articleItem = res.toJSON()
-          setcategory_1_key(articleItem.category_1_key)
-          setcategory_1_title(articleItem.category_1_title)
-          setcategory_2_key(articleItem.category_2_key)
-          setcategory_2_title(articleItem.category_2_title)
+          const res = await getArticleById({ id: aid });
+          const articleItem = res.toJSON();
+          setcategory_1_key(articleItem.category_1_key);
+          setcategory_1_title(articleItem.category_1_title);
+          setcategory_2_key(articleItem.category_2_key);
+          setcategory_2_title(articleItem.category_2_title);
           try {
-            setarticleItem(res)
-            setarticleTitle(articleItem.title)
+            setarticleItem(res);
+            setarticleTitle(articleItem.title);
           } catch (error) {
-            console.log(error)
+            console.log(error);
           }
           if (articleItem.articleVal) {
-            setarticleVal(articleItem.articleVal)
+            setarticleVal(articleItem.articleVal);
           }
         }
-        fetchData()
+        fetchData();
       }
     }
-  }, [router])
+  }, [router]);
 
   return (
     <Layout hideSidebar bodyStyle={{ paddingBottom: 0 }}>
@@ -188,20 +191,44 @@ Ready to start writing?  Either start changing stuff on the left or
                 placeholder="请输入文章标题"
                 value={articleTitle}
                 onChange={(e) => {
-                  setarticleTitle(e.target.value)
+                  setarticleTitle(e.target.value);
                 }}
               />
               <div className={styles.articles_detail_operation}>
-                <div className={styles.articles_detail_operation_btn}>
+                <div className={styles.articles_detail_operation_assets}>
+                  <PictureOutlined
+                    style={{ fontSize: 20 }}
+                    onClick={() => {
+                      setmodalShow(true);
+                    }}
+                  />
+                  <Modal
+                    width={900}
+                    visible={modalShow}
+                    onCancel={() => {
+                      setmodalShow(false);
+                    }}
+                    onOk={() => {
+                      handleCreate();
+                    }}
+                    okText="保存"
+                    cancelText="取消"
+                    bodyStyle={{ padding: 0 }}
+                    footer={null}
+                  >
+                    {modalShow && <Upload />}
+                  </Modal>
+                </div>
+                <div className={styles.articles_detail_operation_catagory}>
                   <TreeSelect
-                    style={{ width: '100%' }}
+                    style={{ width: "100%" }}
                     value={category_2_key || category_1_key}
-                    dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                    dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
                     treeData={menus}
                     placeholder="请选择分类"
                     treeDefaultExpandAll
                     onChange={(catgory_key) => {
-                      onCategoryChange(catgory_key)
+                      onCategoryChange(catgory_key);
                     }}
                   />
                 </div>
@@ -210,7 +237,7 @@ Ready to start writing?  Either start changing stuff on the left or
                   size="large"
                   shape="round"
                   onClick={async () => {
-                    await handleUpdate()
+                    await handleUpdate();
                   }}
                 >
                   保存
@@ -221,7 +248,7 @@ Ready to start writing?  Either start changing stuff on the left or
                   shape="round"
                   danger
                   onClick={async () => {
-                    await handleUpdate({ status: 3 })
+                    await handleUpdate({ status: 3 });
                   }}
                 >
                   保存并上线
@@ -243,12 +270,12 @@ Ready to start writing?  Either start changing stuff on the left or
                 <CodeMirror
                   value={articleVal}
                   options={{
-                    mode: 'javascript',
-                    theme: 'github-light',
+                    mode: "javascript",
+                    theme: "github-light",
                     lineNumbers: true,
                   }}
                   onChange={(editor, data, value) => {
-                    setarticleVal(value)
+                    setarticleVal(value);
                   }}
                 />
               )}
@@ -265,7 +292,7 @@ Ready to start writing?  Either start changing stuff on the left or
         </div>
       )}
     </Layout>
-  )
+  );
 }
 
-export default AdminHome
+export default AdminHome;
